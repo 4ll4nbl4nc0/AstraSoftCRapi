@@ -1,4 +1,4 @@
-using AstraSoftCR.Services.Interfaces;
+﻿using AstraSoftCR.Services.Interfaces;
 using AstraSoftCR.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,12 +23,13 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// ✅ Swagger habilitado en todos los entornos (incluye producción)
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-	app.UseSwagger();
-	app.UseSwaggerUI();
-}
+	c.SwaggerEndpoint("/swagger/v1/swagger.json", "AstraSoftCR API v1");
+	c.RoutePrefix = "swagger"; // acceder con /swagger
+});
 
 app.UseHttpsRedirection();
 
